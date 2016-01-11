@@ -1,0 +1,2 @@
+# GameTrackerServerInformation
+Non-Profit Software.
