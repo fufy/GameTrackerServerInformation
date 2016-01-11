@@ -1,0 +1,69 @@
+/*
+	Thanks to Exolent & Askhanar; Plugin made by  Fuffy(2016).
+*/
+
+#include <amxmodx>
+
+new g_ServerIP[32];
+
+public plugin_init( )
+{
+	register_plugin( "GameTracker Informations", "1.0", "fuffy" );
+
+	register_clcmd( "say /gscore", "GScore" );
+	register_clcmd( "say /gserver", "GServer" );
+	register_clcmd( "say /gtop", "GTop" );
+
+	register_clcmd( "say_team /gscore", "GScore" );
+	register_clcmd( "say_team /gserver", "GServer" );
+	register_clcmd( "say_team /gtop", "GTop" );
+
+	get_user_ip( 0, g_ServerIP, charsmax( g_ServerIP ) - 1, 0 );
+}
+
+public GServer( id )
+{
+	new zformat[60];
+	formatex( zformat, charsmax( zformat ) - 1, "www.gametracker.com/server_info/%s/",g_ServerIP );
+
+   	new motd[256];
+	formatex(motd, sizeof(motd) - 1,\
+        "<html><head><meta http-equiv=^"Refresh^" content=^"0;url=%s^"></head><body><p><center>LOADING...</center></p></body></html>",\
+            zformat)
+
+	show_motd( id, motd );
+	return PLUGIN_HANDLED;
+}
+
+
+public GTop( id )
+{
+	new zformat[60];
+	formatex( zformat, charsmax( zformat ) - 1, "www.gametracker.com/server_info/%s/top_players/",g_ServerIP );
+
+   	new motd[256];
+	formatex(motd, sizeof(motd) - 1,\
+        "<html><head><meta http-equiv=^"Refresh^" content=^"0;url=%s^"></head><body><p><center>LOADING...</center></p></body></html>",\
+            zformat)
+
+	show_motd( id, motd );
+	return PLUGIN_HANDLED;
+}
+
+public GScore( id )
+{
+	new szName[32];
+	get_user_name( id, szName, charsmax( szName ) );
+
+	new zformat[60];
+	formatex( zformat, charsmax( zformat ) - 1, "www.gametracker.com/player/%s/%s/", szName, g_ServerIP );
+
+  	new motd[256];
+	formatex(motd, sizeof(motd) - 1,\
+        "<html><head><meta http-equiv=^"Refresh^" content=^"0;url=%s^"></head><body><p><center>LOADING...</center></p></body></html>",\
+            zformat)
+
+	show_motd( id, motd);
+
+	return PLUGIN_HANDLED;
+}
